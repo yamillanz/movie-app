@@ -33,7 +33,7 @@ interface ReleaseDate {
   day: number | null;
   month: number | null;
   year: number;
-//   __typename: string;
+  //   __typename: string;
 }
 
 interface Movie {
@@ -53,7 +53,7 @@ interface MovieDTO {
   titleText?: string;
   titleType?: string;
   originalTitleText?: string;
-  releaseYear?: YearRange | null;
+  releaseYear?: number;
   releaseDate?: ReleaseDate | null;
 }
 

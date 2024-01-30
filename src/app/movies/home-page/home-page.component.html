@@ -1,7 +1,6 @@
-<mat-sidenav-container class="sidenav-container min-h-screen px-2">
-    <mat-sidenav-content>
+<mat-sidenav-container class="sidenav-container min-h-screen px-2 sm:overflow-x-auto">
+    <mat-sidenav-content class="sm:overflow-x-auto">
         <app-header />
-        <!-- <app-movie-list /> -->
-        <app-movie-list-simple />
+        <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>

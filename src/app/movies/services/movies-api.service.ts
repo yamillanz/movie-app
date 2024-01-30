@@ -21,7 +21,7 @@ export class MoviesApiService {
       'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com',
     };
     return this.http.get(this.URL, { params, headers }).pipe(
-      // first(),
+      first(),
       map((res: any) => {
         const { page, next, entries, results } = res;
         const cleanData: MovieListItem = {

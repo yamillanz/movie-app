@@ -4,6 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MoviesApiService } from '../services/movies-api.service';
 import { MovieDTO } from '../models/movies';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 
 export interface PeriodicElement {
   name: string;
@@ -27,7 +29,10 @@ export class MovieListSimpleComponent implements OnInit {
   // dataSource: MovieDTO[] = [];
   dataSource!: MatTableDataSource<MovieDTO>;
 
-  constructor(private moviesSevice: MoviesApiService) {
+  constructor(
+    private moviesSevice: MoviesApiService,
+    public dialog: MatDialog
+  ) {
     this.moviesSevice.getMovies({}).subscribe((movies) => {
       console.log(movies.movies);
       this.dataSource = new MatTableDataSource(movies.movies);
@@ -41,5 +46,20 @@ export class MovieListSimpleComponent implements OnInit {
   clearTable(): void {
     // this.dataSource = new MatTableDataSource([] as MovieDTO[]);
     this.dataSource.data = [];
+  }
+
+  openDialog(movie: MovieDTO): void {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: movie,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      console.log(result);
+      if (result?.delete) {
+        this.dataSource.data = this.dataSource.data.filter(
+          (movie) => movie.id !== result.data.id
+        );
+      }
+    });
   }
 }
