@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -6,6 +6,7 @@ import { MoviesApiService } from '../services/movies-api.service';
 import { MovieDTO } from '../models/movies';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
+import { Router } from '@angular/router';
 
 export interface PeriodicElement {
   name: string;
@@ -29,6 +30,7 @@ export class MovieListSimpleComponent implements OnInit {
   // dataSource: MovieDTO[] = [];
   dataSource!: MatTableDataSource<MovieDTO>;
 
+  router = inject(Router);
   constructor(
     private moviesSevice: MoviesApiService,
     public dialog: MatDialog
@@ -48,22 +50,15 @@ export class MovieListSimpleComponent implements OnInit {
   }
 
   addMovie(): void {
-    this.moviesSevice.addMovie({});
+    // this.moviesSevice.addMovie({});
+    this.router.navigate(['/movies/new']);
   }
 
   openDialog(movie: MovieDTO): void {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: movie,
     });
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   console.log('The dialog was closed');
-    //   console.log(result);
-    //   if (result?.delete) {
-    //     this.dataSource.data = this.dataSource.data.filter(
-    //       (movie) => movie.id !== result.data.id
-    //     );
-    //   }
-    // });
+
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
       console.log(result);
