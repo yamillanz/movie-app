@@ -1,4 +1,4 @@
-<div class="mat-elevation-z8 mt-4">
+<div class="mat-elevation-z8 mt-4 w-full">
 
   <div class="mb-1 flex justify-end w-full">
     <button mat-raised-button (click)="addMovie()" color="accent">Add Data</button>
@@ -58,5 +58,9 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
+  <div class="flex justify-items-center justify-center w-full">
+    <mat-paginator [pageSize]="5" [hidePageSize]="true" aria-label="Select page of users" class="w-full center"></mat-paginator>
+  </div>
+
 
 </div>

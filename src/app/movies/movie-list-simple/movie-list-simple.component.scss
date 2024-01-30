@@ -21,3 +21,20 @@
   width: 100%;
   overflow-x: auto;
 }
+
+// .mat-mdc-paginator-container {
+//   display: flex;
+//   justify-content: center !important;
+// }
+
+// .mat-paginator {
+//   display: flex;
+//   justify-content: center;
+// } 
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}

@@ -1,4 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,53 +13,44 @@ import { MovieDTO } from '../models/movies';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { Router } from '@angular/router';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-/**
- * @title Basic use of `<table mat-table>`
- */
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 @Component({
   selector: 'app-movie-list-simple',
   standalone: true,
   templateUrl: './movie-list-simple.component.html',
   styleUrl: './movie-list-simple.component.scss',
-  imports: [MatTableModule, MatButtonModule, MatIconModule],
+  imports: [MatTableModule, MatButtonModule, MatIconModule, MatPaginatorModule],
 })
-export class MovieListSimpleComponent implements OnInit {
+export class MovieListSimpleComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['id', 'title', 'image', 'year', 'actions'];
   // dataSource: MovieDTO[] = [];
   dataSource!: MatTableDataSource<MovieDTO>;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   router = inject(Router);
   constructor(
     private moviesSevice: MoviesApiService,
     public dialog: MatDialog
-  ) {
-    // this.moviesSevice.getMovies({}).subscribe((movies) => {
-    //   console.log(movies.movies);
-    //   this.dataSource = new MatTableDataSource(movies.movies);
-    // });
-    this.moviesSevice.getStoredMovies().subscribe((movies) => {
-      this.dataSource = new MatTableDataSource(movies);
-    });
-  }
-  ngOnInit(): void {
-    // this.moviesSevice.getMovies({}).subscribe((movies) => {
-    //   this.dataSource = movies.movies;
-    // });
-  }
+  ) {}
 
   addMovie(): void {
     // this.moviesSevice.addMovie({});
     this.router.navigate(['/movies/new']);
   }
 
+  ngOnInit(): void {
+    this.moviesSevice.getStoredMovies().subscribe((movies) => {
+      this.dataSource = new MatTableDataSource(movies);
+      this.dataSource.paginator = this.paginator;
+    });
+  }
+
+  ngAfterViewInit(): void {
+    // this.moviesSevice.getStoredMovies().subscribe((movies) => {
+    //   this.dataSource = new MatTableDataSource(movies);
+    this.dataSource.paginator = this.paginator;
+    // });
+  }
   openDialog(movie: MovieDTO): void {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: movie,
