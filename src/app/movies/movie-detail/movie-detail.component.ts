@@ -30,7 +30,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatRadioModule,
     MatCardModule,
     ReactiveFormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
   ],
 })
 export class MovieDetailComponent implements OnInit {
@@ -59,10 +59,16 @@ export class MovieDetailComponent implements OnInit {
       if (params.id) {
         this.moviesService.getMovie(params.id).subscribe((movie) => {
           // console.log('in', movie);
-          this.movie = movie ?? {};
-          console.log('movie', this.movie);
-          this.movieForm.patchValue(this.movie);
-          this.editing = true;
+          if (movie) {
+            this.movie = movie;
+            console.log('movie', this.movie);
+            this.movieForm.patchValue(this.movie);
+            this.editing = true;
+            // if (this.movieForm) {
+            this.movieForm.get('id')?.disable();
+            // }
+            // this.movieForm.get('id').disable();
+          }
         });
       }
     });
@@ -85,6 +91,10 @@ export class MovieDetailComponent implements OnInit {
       this.moviesService.addMovie(movieData);
     }
     alert('Thanks!');
+    this.router.navigate(['/movies']);
+  }
+
+  volver(): void {
     this.router.navigate(['/movies']);
   }
 }

@@ -1,0 +1,23 @@
+.mat-column-title,
+.mat-column-year {
+  min-width: 6rem;
+}
+
+.mat-column-image {
+  min-width: 5rem;
+}
+
+// .mat-column-image img {
+//   width: 100%;
+//   height: auto;
+// }
+.mat-column-actions {
+//   max-width: 5rem;
+  min-width: 7rem;
+  text-align: center;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
