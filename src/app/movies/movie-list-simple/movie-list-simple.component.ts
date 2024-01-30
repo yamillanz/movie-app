@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,7 +25,7 @@ export interface PeriodicElement {
   styleUrl: './movie-list-simple.component.scss',
   imports: [MatTableModule, MatButtonModule, MatIconModule],
 })
-export class MovieListSimpleComponent implements OnInit {
+export class MovieListSimpleComponent {
   displayedColumns: string[] = ['id', 'title', 'image', 'year', 'actions'];
   // dataSource: MovieDTO[] = [];
   dataSource!: MatTableDataSource<MovieDTO>;
@@ -35,18 +35,9 @@ export class MovieListSimpleComponent implements OnInit {
     private moviesSevice: MoviesApiService,
     public dialog: MatDialog
   ) {
-    // this.moviesSevice.getMovies({}).subscribe((movies) => {
-    //   console.log(movies.movies);
-    //   this.dataSource = new MatTableDataSource(movies.movies);
-    // });
     this.moviesSevice.getStoredMovies().subscribe((movies) => {
       this.dataSource = new MatTableDataSource(movies);
     });
-  }
-  ngOnInit(): void {
-    // this.moviesSevice.getMovies({}).subscribe((movies) => {
-    //   this.dataSource = movies.movies;
-    // });
   }
 
   addMovie(): void {
