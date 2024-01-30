@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MovieListComponent } from '../movie-list/movie-list.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MovieListSimpleComponent } from '../movie-list-simple/movie-list-simple.component';
 
 @Component({
   selector: 'app-home-page',
@@ -14,6 +15,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     RouterOutlet,
     MovieListComponent,
     MatSidenavModule,
+    MovieListSimpleComponent,
   ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
