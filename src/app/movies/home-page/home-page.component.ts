@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MovieListComponent } from '../movie-list/movie-list.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MovieListSimpleComponent } from '../movie-list-simple/movie-list-simple.component';
 
@@ -13,7 +12,6 @@ import { MovieListSimpleComponent } from '../movie-list-simple/movie-list-simple
     HeaderComponent,
     CommonModule,
     RouterOutlet,
-    MovieListComponent,
     MatSidenavModule,
     MovieListSimpleComponent,
   ],

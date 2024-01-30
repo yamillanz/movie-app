@@ -48,8 +48,8 @@ interface Movie {
 }
 
 interface MovieDTO {
-  id?: string | null;
-  primaryImage?: string | null;
+  id?: string;
+  primaryImage?: string;
   titleText?: string;
   titleType?: string;
   originalTitleText?: string;

@@ -14,7 +14,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { MovieDTO } from '../models/movies';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MoviesApiService } from '../services/movies-api.service';
 
 @Component({
   selector: 'app-movie-detail',
@@ -32,36 +33,56 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class MovieDetailComponent implements OnInit {
   private fb = inject(FormBuilder);
-  addressForm = this.fb.group({
-    id: [null, Validators.required],
-    nombre: [null, Validators.required],
-    imagen: null,
-    year: [null, Validators.required],
-    type: [null, Validators.required],
-    // address2: null,
-    // city: [null, Validators.required],
-    // state: [null, Validators.required],
-    // postalCode: [null, Validators.compose([
-    //   Validators.required, Validators.minLength(5), Validators.maxLength(5)])
-    // ],
-    // shipping: ['free', Validators.required]
-  });
-
   @Input() movie: MovieDTO = {} as MovieDTO;
   @Output() movieChange = new EventEmitter<MovieDTO>();
-  
-  constructor(private route: ActivatedRoute) {}
+  editing = false;
+
+  movieForm = this.fb.group({
+    id: [this.movie.id, Validators.required],
+    titleText: [this.movie.titleText, Validators.required],
+    primaryImage: [this.movie.primaryImage, Validators.required],
+    releaseYear: [this.movie.releaseYear, Validators.required],
+    titleType: this.movie.titleType,
+  });
+
+  constructor(
+    private route: ActivatedRoute,
+    private moviesService: MoviesApiService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params: any) => {
-      console.log(params);
-      this.movie.id = params.id ?? null;
+      // console.log(params);
+      if (params.id) {
+        this.moviesService.getMovie(params.id).subscribe((movie) => {
+          // console.log('in', movie);
+          this.movie = movie ?? {};
+          console.log('movie', this.movie);
+          this.movieForm.patchValue(this.movie);
+          this.editing = true;
+        });
+      }
     });
   }
 
   // hasUnitNumber = false
 
-  onSubmit(): void {
+  onSubmit(e: any): void {
+    e.preventDefault();
+    const movieData: MovieDTO = {
+      id: this.movieForm.value.id || undefined,
+      titleText: this.movieForm.value.titleText || undefined,
+      primaryImage: this.movieForm.value.primaryImage || undefined,
+      releaseYear: this.movieForm.value.releaseYear || undefined,
+      titleType: this.movieForm.value.titleType || undefined,
+    };
+    if (this.editing) {
+      this.moviesService.updateMovie(movieData);
+    } else {
+      this.moviesService.addMovie(movieData);
+    }
     alert('Thanks!');
+    this.router.navigate(['/movies']);
   }
 }

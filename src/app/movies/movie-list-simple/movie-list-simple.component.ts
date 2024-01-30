@@ -33,9 +33,12 @@ export class MovieListSimpleComponent implements OnInit {
     private moviesSevice: MoviesApiService,
     public dialog: MatDialog
   ) {
-    this.moviesSevice.getMovies({}).subscribe((movies) => {
-      console.log(movies.movies);
-      this.dataSource = new MatTableDataSource(movies.movies);
+    // this.moviesSevice.getMovies({}).subscribe((movies) => {
+    //   console.log(movies.movies);
+    //   this.dataSource = new MatTableDataSource(movies.movies);
+    // });
+    this.moviesSevice.getStoredMovies().subscribe((movies) => {
+      this.dataSource = new MatTableDataSource(movies);
     });
   }
   ngOnInit(): void {
@@ -43,22 +46,29 @@ export class MovieListSimpleComponent implements OnInit {
     //   this.dataSource = movies.movies;
     // });
   }
-  clearTable(): void {
-    // this.dataSource = new MatTableDataSource([] as MovieDTO[]);
-    this.dataSource.data = [];
+
+  addMovie(): void {
+    this.moviesSevice.addMovie({});
   }
 
   openDialog(movie: MovieDTO): void {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: movie,
     });
+    // dialogRef.afterClosed().subscribe((result) => {
+    //   console.log('The dialog was closed');
+    //   console.log(result);
+    //   if (result?.delete) {
+    //     this.dataSource.data = this.dataSource.data.filter(
+    //       (movie) => movie.id !== result.data.id
+    //     );
+    //   }
+    // });
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
       console.log(result);
       if (result?.delete) {
-        this.dataSource.data = this.dataSource.data.filter(
-          (movie) => movie.id !== result.data.id
-        );
+        this.moviesSevice.deleteMovie(result.data.id);
       }
     });
   }

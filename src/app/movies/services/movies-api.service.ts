@@ -1,14 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, first, map, tap } from 'rxjs';
-import { MovieListItem } from '../models/movies';
+import { BehaviorSubject, Observable, first, map, tap } from 'rxjs';
+import { MovieDTO, MovieListItem } from '../models/movies';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MoviesApiService {
   private URL = 'https://moviesdatabase.p.rapidapi.com/titles';
-  constructor(private http: HttpClient) {}
+
+  private Movies: BehaviorSubject<MovieDTO[]> = new BehaviorSubject<MovieDTO[]>(
+    []
+  );
+
+  constructor(private http: HttpClient) {
+    this.getMovies({ page: 1 }).subscribe();
+  }
 
   getMovies({ page = 1 }): Observable<MovieListItem> {
     const params = {
@@ -51,7 +58,41 @@ export class MoviesApiService {
         };
 
         return cleanData;
+      }),
+      tap((movies) => {
+        this.Movies.next(movies.movies);
       })
     ) as Observable<MovieListItem>;
+  }
+
+  getStoredMovies(): Observable<MovieDTO[]> {
+    return this.Movies.asObservable();
+  }
+
+  addMovie(movie: MovieDTO): void {
+    this.Movies.next([...this.Movies.value, movie]);
+  }
+
+  getMovie(id: string): Observable<MovieDTO | undefined> {
+    return this.Movies.pipe(
+      map((movies) => movies.find((movie) => movie.id === id))
+    );
+  }
+
+  updateMovie(movie: MovieDTO | undefined): void {
+    if (!movie) {
+      return;
+    }
+    const movies = this.Movies.value;
+    const index = movies.findIndex((m) => m.id === movie.id);
+    movies[index] = movie;
+    this.Movies.next(movies);
+  }
+
+  deleteMovie(id: string): void {
+    const movies = this.Movies.value;
+    const index = movies.findIndex((m) => m.id === id);
+    movies.splice(index, 1);
+    this.Movies.next(movies);
   }
 }
