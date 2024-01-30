@@ -4,20 +4,19 @@
       <mat-card-title>Movie Infomation</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <div class="row">
-        <div class="col">
+      <div class="row" fxLayout="row" fxLayout.lt-sm="column">
+        <div class="col" fxFlex="50" fxFlex.lt-sm="100" class="full-width mr-5">
           <mat-form-field class="full-width">
             <mat-hint align="start">Id</mat-hint>
-            <input matInput placeholder="Id" formControlName="id">
+            <input matInput placeholder="Id" formControlName="id" class="full-width">
             @if (movieForm.controls['id'].hasError('required')) {
             <mat-error>Id is <strong>required</strong></mat-error>
             }
           </mat-form-field>
         </div>
-        <div class="col">
+        <div class="col" fxFlex="50" fxFlex.lt-sm="100">
           <mat-form-field class="full-width">
             <mat-hint align="start">Nombre Pelicula</mat-hint>
-
             <input matInput placeholder="Nombre Pelicula" formControlName="titleText">
             @if (movieForm.controls['titleText'].hasError('required')) {
             <mat-error>Name is <strong>required</strong></mat-error>
@@ -26,8 +25,8 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col">
+      <div class="row" fxLayout="row" fxLayout.lt-sm="column">
+        <div class="col" fxFlex="50" fxFlex.lt-sm="100" class="full-width mr-5">
           <mat-form-field class="full-width">
             <mat-hint align="start">Año de lanzamiento</mat-hint>
 
@@ -36,10 +35,10 @@
             <!-- <mat-hint align="end">100 / 5</mat-hint> -->
           </mat-form-field>
         </div>
-        <div class="col">
+        <div class="col" fxFlex="50" fxFlex.lt-sm="100">
           <mat-form-field class="full-width">
             <mat-hint align="start">Tipo de Pelicula</mat-hint>
-            <input matInput placeholder="Tipo de Pelicula" formControlName="titleType">
+            <input matInput placeholder="Tipo de Pelicula" formControlName="titleType" class="">
           </mat-form-field>
         </div>
       </div>

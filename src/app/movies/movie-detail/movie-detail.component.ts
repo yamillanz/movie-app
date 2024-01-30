@@ -16,6 +16,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MovieDTO } from '../models/movies';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MoviesApiService } from '../services/movies-api.service';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @Component({
   selector: 'app-movie-detail',
@@ -29,6 +30,7 @@ import { MoviesApiService } from '../services/movies-api.service';
     MatRadioModule,
     MatCardModule,
     ReactiveFormsModule,
+    FlexLayoutModule
   ],
 })
 export class MovieDetailComponent implements OnInit {
