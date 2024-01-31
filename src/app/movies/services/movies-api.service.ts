@@ -24,7 +24,6 @@ export class MoviesApiService {
     };
 
     const headers = {
-      // 'X-RapidAPI-Key': '3da12935bdmshf13f67201a67acbp1fdcb7jsn981cef6e0a51',
       'X-RapidAPI-Key': environment.RAPID_API_KEY,
       'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com',
     };
@@ -86,7 +85,6 @@ export class MoviesApiService {
     }
     const movies = this.Movies.value;
     const index = movies.findIndex((m) => m.id === movie.id);
-    console.log('🚀 ~ MoviesApiService ~ updateMovie ~ index:', index);
     movies[index] = movie;
     this.Movies.next(movies);
   }
