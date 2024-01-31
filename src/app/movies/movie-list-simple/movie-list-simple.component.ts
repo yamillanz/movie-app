@@ -14,6 +14,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { Router } from '@angular/router';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MovieDetailComponent } from '../movie-detail/movie-detail.component';
+import { isEmptyObject } from '../../shared/helpers/utilities';
+import { MovieDetailDialogComponent } from '../movie-detail-dialog/movie-detail-dialog.component';
 @Component({
   selector: 'app-movie-list-simple',
   standalone: true,
@@ -23,7 +26,6 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 })
 export class MovieListSimpleComponent implements OnInit {
   displayedColumns: string[] = ['id', 'title', 'image', 'year', 'actions'];
-  // dataSource: MovieDTO[] = [];
   dataSource!: MatTableDataSource<MovieDTO>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -33,8 +35,20 @@ export class MovieListSimpleComponent implements OnInit {
   constructor(public dialog: MatDialog) {}
 
   addMovie(): void {
+    const dialogRef = this.dialog.open(MovieDetailDialogComponent, {
+      width: '50rem',
+      // maxWidth: '22rem',
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result.data && !isEmptyObject(result.data)) {
+        console.log(result);
+        // this.moviesSevice.addMovie(result.data);
+      }
+    });
     // this.moviesSevice.addMovie({});
-    this.router.navigate(['/movies/new']);
+    // this.router.navigate(['/movies/new']);
   }
 
   ngOnInit(): void {

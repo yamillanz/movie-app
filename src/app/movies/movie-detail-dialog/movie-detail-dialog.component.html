@@ -1,0 +1,70 @@
+<h2 mat-dialog-title>Datos del la Pelicula</h2>
+<mat-dialog-content class="mat-typography">
+
+    <form [formGroup]="movieForm" novalidate (ngSubmit)="onSubmit($event)">
+        <!-- <mat-card class="shipping-card"> -->
+        <!-- <mat-card-header>
+            <mat-card-title>Movie Infomation</mat-card-title>
+        </mat-card-header> -->
+        <mat-card-content>
+            <div class="row" fxLayout="row" fxLayout.lt-sm="column">
+                <div class="col" fxFlex="50" fxFlex.lt-sm="100" class="full-width sm:mr-5">
+                    <mat-form-field class="full-width">
+                        <!-- <mat-hint align="start">Id</mat-hint> -->
+                        <mat-label>Id</mat-label>
+                        <input matInput placeholder="Id" formControlName="id" class="full-width">
+                        @if (movieForm.controls['id'].hasError('required')) {
+                        <mat-error>Id is <strong>required</strong></mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+                <div class="col" fxFlex="50" fxFlex.lt-sm="100">
+                    <mat-form-field class="full-width">
+                        <mat-label>Nombre Pelicula</mat-label>
+
+                        <input matInput placeholder="Nombre Pelicula" formControlName="titleText">
+                        @if (movieForm.controls['titleText'].hasError('required')) {
+                        <mat-error>Name is <strong>required</strong></mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row" fxLayout="row" fxLayout.lt-sm="column">
+                <div class="col" fxFlex="50" fxFlex.lt-sm="100" class="full-width mr-5">
+                    <mat-form-field class="full-width">
+                        <mat-label>Año de Lanzamiento</mat-label>
+                        <input matInput #postalCode maxlength="5" placeholder="Año de lanzamiento" type="number"
+                            formControlName="releaseYear">
+
+                    </mat-form-field>
+                </div>
+                <div class="col" fxFlex="50" fxFlex.lt-sm="100">
+                    <mat-form-field class="full-width">
+                        <mat-label>Genero</mat-label>
+                        <input matInput placeholder="Genero" formControlName="titleType" class="">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label>Url Imagen</mat-label>
+                        <input matInput placeholder="url" formControlName="primaryImage">
+                        @if (movieForm.controls['primaryImage'].hasError('required')) {
+                        <mat-error>Imagen is <strong>required</strong></mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </mat-card-content>
+        <!-- </mat-card> -->
+    </form>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close color="accent">Cancel</button>
+    <button mat-button cdkFocusInitial color="accent" (click)="sendData()">Confirmar</button>
+</mat-dialog-actions>

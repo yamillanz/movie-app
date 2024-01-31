@@ -24,8 +24,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   styleUrl: './movie-detail.component.scss',
   standalone: true,
   imports: [
-    MatInputModule,
     MatButtonModule,
+    MatInputModule,
     MatSelectModule,
     MatRadioModule,
     MatCardModule,
