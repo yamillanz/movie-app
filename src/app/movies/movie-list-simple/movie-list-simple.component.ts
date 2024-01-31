@@ -51,6 +51,11 @@ export class MovieListSimpleComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
     // });
   }
+
+  updateMovie(movie: MovieDTO): void {
+    this.router.navigate(['/movies', movie.id]);
+  }
+
   openDialog(movie: MovieDTO): void {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: movie,

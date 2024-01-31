@@ -85,6 +85,7 @@ export class MoviesApiService {
     }
     const movies = this.Movies.value;
     const index = movies.findIndex((m) => m.id === movie.id);
+    console.log('🚀 ~ MoviesApiService ~ updateMovie ~ index:', index);
     movies[index] = movie;
     this.Movies.next(movies);
   }
