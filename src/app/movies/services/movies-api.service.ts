@@ -88,7 +88,13 @@ export class MoviesApiService {
   }
 
   addMovie(movie: MovieDTO): void {
-    this.Movies.next([...this.Movies.value, movie]);
+    try {
+      // this.createMovie(movie);
+      this.Movies.next([...this.Movies.value, movie]);
+      // this.log('Movie added successfully');
+    } catch (error) {
+      this.handleError('addMovie', error);
+    }
   }
 
   getMovie(id: string): Observable<MovieDTO | undefined> {
@@ -127,12 +133,8 @@ export class MoviesApiService {
 
   /** Log a HeroService message with the MessageService */
   private log(message: string) {
-    // this._snackBar.openFromComponent(GlobalMessageComponent, {
-    //   duration: 3000,
-    // });
     this._snackBar.open(message, 'close', {
       duration: 25000,
     });
-    // this.messageService.add(`Error: ${message}`);
   }
 }

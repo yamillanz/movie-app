@@ -46,6 +46,7 @@ export class MovieListSimpleComponent implements OnInit {
       if (result.data && !isEmptyObject(result.data)) {
         console.log(result);
         this.moviesSevice.addMovie(result.data);
+        this.openSnackBar();
       }
     });
   }
