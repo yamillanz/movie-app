@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  OnDestroy,
   OnInit,
   ViewChild,
   inject,
@@ -20,6 +21,7 @@ import { MovieDetailDialogComponent } from '../movie-detail-dialog/movie-detail-
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GlobalMessageComponent } from '../../shared/global-message/global-message.component';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-movie-list-simple',
   standalone: true,
@@ -28,10 +30,12 @@ import { GlobalMessageComponent } from '../../shared/global-message/global-messa
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [MatTableModule, MatButtonModule, MatIconModule, MatPaginatorModule],
 })
-export class MovieListSimpleComponent implements OnInit {
+export class MovieListSimpleComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['id', 'title', 'image', 'year', 'actions'];
   dataSource!: MatTableDataSource<MovieDTO>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  subscription: Subscription = new Subscription();
 
   router = inject(Router);
   moviesSevice = inject(MoviesApiService);
@@ -54,10 +58,12 @@ export class MovieListSimpleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.moviesSevice.getStoredMovies().subscribe((movies) => {
-      this.dataSource = new MatTableDataSource(movies);
-      this.dataSource.paginator = this.paginator;
-    });
+    this.subscription = this.moviesSevice
+      .getStoredMovies()
+      .subscribe((movies) => {
+        this.dataSource = new MatTableDataSource(movies);
+        this.dataSource.paginator = this.paginator;
+      });
   }
 
   // ngAfterViewInit(): void {
@@ -95,5 +101,9 @@ export class MovieListSimpleComponent implements OnInit {
         this.moviesSevice.deleteMovie(result.data.id);
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
