@@ -12,7 +12,6 @@ import {
 import { MovieDTO, MovieListItem } from '../models/movies';
 import { environment } from '../../../environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { GlobalMessageComponent } from '../../shared/global-message/global-message.component';
 
 @Injectable({
   providedIn: 'root',

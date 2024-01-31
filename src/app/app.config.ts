@@ -7,13 +7,15 @@ import {
   provideHttpClient,
   withFetch,
   withJsonpSupport,
-  withRequestsMadeViaParent,
 } from '@angular/common/http';
+
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideAnimations(),
     provideHttpClient(withFetch(), withJsonpSupport()),
+    provideHttpClientTesting(),
   ],
 };
