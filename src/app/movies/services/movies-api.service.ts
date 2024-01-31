@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, first, map, tap } from 'rxjs';
 import { MovieDTO, MovieListItem } from '../models/movies';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -21,10 +22,10 @@ export class MoviesApiService {
     const params = {
       page: page.toString(),
     };
-    // params.set('limit', '10');
 
     const headers = {
-      'X-RapidAPI-Key': '3da12935bdmshf13f67201a67acbp1fdcb7jsn981cef6e0a51',
+      // 'X-RapidAPI-Key': '3da12935bdmshf13f67201a67acbp1fdcb7jsn981cef6e0a51',
+      'X-RapidAPI-Key': environment.RAPID_API_KEY,
       'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com',
     };
     return this.http.get(this.URL, { params, headers }).pipe(
