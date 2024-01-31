@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   OnInit,
   ViewChild,
@@ -24,6 +25,7 @@ import { GlobalMessageComponent } from '../../shared/global-message/global-messa
   standalone: true,
   templateUrl: './movie-list-simple.component.html',
   styleUrl: './movie-list-simple.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [MatTableModule, MatButtonModule, MatIconModule, MatPaginatorModule],
 })
 export class MovieListSimpleComponent implements OnInit {
