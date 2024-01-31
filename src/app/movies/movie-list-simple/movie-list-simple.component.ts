@@ -1,4 +1,10 @@
-import { Component, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,42 +13,43 @@ import { MovieDTO } from '../models/movies';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { Router } from '@angular/router';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-/**
- * @title Basic use of `<table mat-table>`
- */
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 @Component({
   selector: 'app-movie-list-simple',
   standalone: true,
   templateUrl: './movie-list-simple.component.html',
   styleUrl: './movie-list-simple.component.scss',
-  imports: [MatTableModule, MatButtonModule, MatIconModule],
+  imports: [MatTableModule, MatButtonModule, MatIconModule, MatPaginatorModule],
 })
-export class MovieListSimpleComponent {
+export class MovieListSimpleComponent implements OnInit {
   displayedColumns: string[] = ['id', 'title', 'image', 'year', 'actions'];
   // dataSource: MovieDTO[] = [];
   dataSource!: MatTableDataSource<MovieDTO>;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   router = inject(Router);
-  constructor(
-    private moviesSevice: MoviesApiService,
-    public dialog: MatDialog
-  ) {
-    this.moviesSevice.getStoredMovies().subscribe((movies) => {
-      this.dataSource = new MatTableDataSource(movies);
-    });
-  }
+  moviesSevice = inject(MoviesApiService);
+
+  constructor(public dialog: MatDialog) {}
 
   addMovie(): void {
     // this.moviesSevice.addMovie({});
     this.router.navigate(['/movies/new']);
+  }
+
+  ngOnInit(): void {
+    this.moviesSevice.getStoredMovies().subscribe((movies) => {
+      this.dataSource = new MatTableDataSource(movies);
+      this.dataSource.paginator = this.paginator;
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  updateMovie(movie: MovieDTO): void {
+    this.router.navigate(['/movies', movie.id]);
   }
 
   openDialog(movie: MovieDTO): void {

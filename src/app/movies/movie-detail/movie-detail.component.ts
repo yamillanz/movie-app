@@ -61,13 +61,9 @@ export class MovieDetailComponent implements OnInit {
           // console.log('in', movie);
           if (movie) {
             this.movie = movie;
-            console.log('movie', this.movie);
             this.movieForm.patchValue(this.movie);
             this.editing = true;
-            // if (this.movieForm) {
             this.movieForm.get('id')?.disable();
-            // }
-            // this.movieForm.get('id').disable();
           }
         });
       }
@@ -78,6 +74,7 @@ export class MovieDetailComponent implements OnInit {
 
   onSubmit(e: any): void {
     e.preventDefault();
+    this.movieForm.get('id')?.enable();
     const movieData: MovieDTO = {
       id: this.movieForm.value.id || undefined,
       titleText: this.movieForm.value.titleText || undefined,
@@ -86,11 +83,12 @@ export class MovieDetailComponent implements OnInit {
       titleType: this.movieForm.value.titleType || undefined,
     };
     if (this.editing) {
+      // console.log('updating', movieData);
       this.moviesService.updateMovie(movieData);
     } else {
       this.moviesService.addMovie(movieData);
     }
-    alert('Thanks!');
+    alert('Informacion guardada con exito!');
     this.router.navigate(['/movies']);
   }
 
