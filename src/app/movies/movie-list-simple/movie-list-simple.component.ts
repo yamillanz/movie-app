@@ -14,9 +14,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { Router } from '@angular/router';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MovieDetailComponent } from '../movie-detail/movie-detail.component';
 import { isEmptyObject } from '../../shared/helpers/utilities';
 import { MovieDetailDialogComponent } from '../movie-detail-dialog/movie-detail-dialog.component';
+
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { GlobalMessageComponent } from '../../shared/global-message/global-message.component';
 @Component({
   selector: 'app-movie-list-simple',
   standalone: true,
@@ -32,7 +34,7 @@ export class MovieListSimpleComponent implements OnInit {
   router = inject(Router);
   moviesSevice = inject(MoviesApiService);
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private _snackBar: MatSnackBar) {}
 
   addMovie(): void {
     const dialogRef = this.dialog.open(MovieDetailDialogComponent, {
@@ -55,9 +57,9 @@ export class MovieListSimpleComponent implements OnInit {
     });
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-  }
+  // ngAfterViewInit(): void {
+  //   this.dataSource.paginator = this.paginator;
+  // }
 
   updateMovie(movie: MovieDTO): void {
     const dialogRef = this.dialog.open(MovieDetailDialogComponent, {
@@ -69,7 +71,14 @@ export class MovieListSimpleComponent implements OnInit {
       if (result.data && !isEmptyObject(result.data)) {
         console.log(result);
         this.moviesSevice.updateMovie(result.data);
+        this.openSnackBar();
       }
+    });
+  }
+
+  openSnackBar() {
+    this._snackBar.openFromComponent(GlobalMessageComponent, {
+      duration: 3000,
     });
   }
 
