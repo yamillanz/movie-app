@@ -54,14 +54,27 @@ export class MovieDetailDialogComponent {
     public dialogRef: MatDialogRef<MovieDetailDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: MovieDTO
   ) {
-    console.log('🚀 ~ MovieDetailDialogComponent ~ data:', data);
     if (data.id) {
       this.movie = data;
       this.editing = true;
+      this.movieForm.setValue({
+        id: this.movie.id,
+        titleText: this.movie.titleText,
+        primaryImage: this.movie.primaryImage,
+        releaseYear: this.movie.releaseYear,
+        titleType: this.movie.titleType,
+      });
+      this.movieForm.get('id')?.disable();
     }
   }
 
   sendData() {
+    if (this.movieForm.valid) {
+      this.movieForm.get('id')?.enable();
+      this.movie = this.movieForm.value as MovieDTO;
+      console.log('🚀 ~ MovieDetailDialogComponent ~ movie:', this.movie);
+      // this.dialogRef.close({ data: this.movie });
+    }
     this.dialogRef.close({ data: this.movie });
   }
 

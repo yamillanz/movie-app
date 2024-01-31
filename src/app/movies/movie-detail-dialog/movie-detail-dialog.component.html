@@ -7,9 +7,9 @@
             <mat-card-title>Movie Infomation</mat-card-title>
         </mat-card-header> -->
         <mat-card-content>
-            <div class="row" fxLayout="row" fxLayout.lt-sm="column">
-                <div class="col" fxFlex="50" fxFlex.lt-sm="100" class="full-width sm:mr-5">
-                    <mat-form-field class="full-width">
+            <div class="row w-full" fxLayout="row" fxLayout.lt-sm="column">
+                <div class="col" fxFlex="50" fxFlex.lt-sm="100" class="full-width w-full lg:mr-2">
+                    <mat-form-field class="full-width w-full">
                         <!-- <mat-hint align="start">Id</mat-hint> -->
                         <mat-label>Id</mat-label>
                         <input matInput placeholder="Id" formControlName="id" class="full-width">
@@ -18,8 +18,8 @@
                         }
                     </mat-form-field>
                 </div>
-                <div class="col" fxFlex="50" fxFlex.lt-sm="100">
-                    <mat-form-field class="full-width">
+                <div class="col" fxFlex="50" fxFlex.lt-sm="100" class="full-width w-full">
+                    <mat-form-field class="full-width w-full">
                         <mat-label>Nombre Pelicula</mat-label>
 
                         <input matInput placeholder="Nombre Pelicula" formControlName="titleText">
@@ -30,9 +30,9 @@
                 </div>
             </div>
 
-            <div class="row" fxLayout="row" fxLayout.lt-sm="column">
-                <div class="col" fxFlex="50" fxFlex.lt-sm="100" class="full-width mr-5">
-                    <mat-form-field class="full-width">
+            <div class="row w-full" fxLayout="row" fxLayout.lt-sm="column">
+                <div class="col" fxFlex="50" fxFlex.lt-sm="100" class="full-width w-full lg:mr-2">
+                    <mat-form-field class="full-width w-full">
                         <mat-label>Año de Lanzamiento</mat-label>
                         <input matInput #postalCode maxlength="5" placeholder="Año de lanzamiento" type="number"
                             formControlName="releaseYear">
@@ -40,7 +40,7 @@
                     </mat-form-field>
                 </div>
                 <div class="col" fxFlex="50" fxFlex.lt-sm="100">
-                    <mat-form-field class="full-width">
+                    <mat-form-field class="full-width w-full">
                         <mat-label>Genero</mat-label>
                         <input matInput placeholder="Genero" formControlName="titleType" class="">
                     </mat-form-field>
@@ -49,7 +49,7 @@
 
             <div class="row">
                 <div class="col">
-                    <mat-form-field class="full-width">
+                    <mat-form-field class="full-width w-full">
                         <mat-label>Url Imagen</mat-label>
                         <input matInput placeholder="url" formControlName="primaryImage">
                         @if (movieForm.controls['primaryImage'].hasError('required')) {
@@ -64,7 +64,11 @@
     </form>
 
 </mat-dialog-content>
-<mat-dialog-actions align="end">
+<mat-dialog-actions class="w-full center">
+    <!-- <div class="center w-full"> -->
+
     <button mat-button mat-dialog-close color="accent">Cancel</button>
-    <button mat-button cdkFocusInitial color="accent" (click)="sendData()">Confirmar</button>
+    <button mat-button cdkFocusInitial color="accent" (click)="sendData()"
+        [disabled]="movieForm.invalid">Confirmar</button>
+    <!-- </div> -->
 </mat-dialog-actions>

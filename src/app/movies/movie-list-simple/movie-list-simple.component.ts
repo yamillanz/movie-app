@@ -37,18 +37,15 @@ export class MovieListSimpleComponent implements OnInit {
   addMovie(): void {
     const dialogRef = this.dialog.open(MovieDetailDialogComponent, {
       width: '50rem',
-      // maxWidth: '22rem',
       data: {},
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result.data && !isEmptyObject(result.data)) {
         console.log(result);
-        // this.moviesSevice.addMovie(result.data);
+        this.moviesSevice.addMovie(result.data);
       }
     });
-    // this.moviesSevice.addMovie({});
-    // this.router.navigate(['/movies/new']);
   }
 
   ngOnInit(): void {
@@ -63,17 +60,25 @@ export class MovieListSimpleComponent implements OnInit {
   }
 
   updateMovie(movie: MovieDTO): void {
-    this.router.navigate(['/movies', movie.id]);
+    const dialogRef = this.dialog.open(MovieDetailDialogComponent, {
+      width: '50rem',
+      data: { ...movie },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result.data && !isEmptyObject(result.data)) {
+        console.log(result);
+        this.moviesSevice.updateMovie(result.data);
+      }
+    });
   }
 
-  openDialog(movie: MovieDTO): void {
+  delete(movie: MovieDTO): void {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: movie,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      console.log(result);
       if (result?.delete) {
         this.moviesSevice.deleteMovie(result.data.id);
       }
