@@ -23,7 +23,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GlobalMessageComponent } from '../../shared/global-message/global-message.component';
-import { Subscription, debounceTime, delay } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-movie-list-simple',
@@ -76,7 +76,6 @@ export class MovieListSimpleComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.moviesSevice
       .getStoredMovies()
-      // .pipe(debounceTime(10000))
       .subscribe((movies) => {
         this.dataSource = new MatTableDataSource(movies);
         this.dataSource.paginator = this.paginator;
