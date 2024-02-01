@@ -32,11 +32,11 @@ export class MoviesApiService {
       page: page.toString(),
     };
 
-    const headers = {
-      'X-RapidAPI-Key': environment.RAPID_API_KEY,
-      'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com',
-    };
-    return this.http.get(this.URL, { params, headers }).pipe(
+    // const headers = {
+    //   'X-RapidAPI-Key': environment.RAPID_API_KEY,
+    //   'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com',
+    // };
+    return this.http.get(this.URL, { params }).pipe(
       first(),
       map((res: any) => {
         const { page, next, entries, results } = res;
