@@ -14,7 +14,7 @@ export class RapidApiInterceptor implements HttpInterceptor {
     const modifiedReq = req.clone({
       headers: req.headers
         .set('X-RapidAPI-Key', environment.RAPID_API_KEY)
-        .set('X-RapidAPI-Host', 'your-rapidapi-host.com'),
+        .set('X-RapidAPI-Host', 'moviesdatabase.p.rapidapi.com'),
     });
     console.log(
       '🚀 ~ RapidApiInterceptor ~ intercept ~ modifiedReq:',
@@ -31,6 +31,7 @@ export const RapidApiInterceptorFn: HttpInterceptorFn = (
   const clonedRequest = req.clone({
     setHeaders: {
       'X-RapidAPI-Key': environment.RAPID_API_KEY,
+      'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com',
     },
   });
   return next(clonedRequest);
